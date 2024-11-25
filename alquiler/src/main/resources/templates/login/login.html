@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<th:block th:replace="~{layout/layout :: head-basic-login}"></th:block>
+	<th:block th:replace="~{layout/layout :: bootstrap-css}"></th:block>
+	<th:block th:replace="~{layout/layout :: general-css}"></th:block>
+
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+</head>
+
+<body>
+
+<section class="vh-100">
+	<div class="d-flex justify-content-between flex-column flex-md-row text-center text-white text-md-start py-3 px-4 px-xl-5 menu-bar">
+		<div th:text="${#strings.toUpperCase(applicationData.name)}"></div>
+		<div class="float-end">
+			<span class="light-link" th:if="${applicationData.webUrl == ''}" th:text="${applicationData.authorship}"></span>
+			<a class="light-link" th:if="${applicationData.webUrl != ''}" th:href="${applicationData.webUrl}" th:text="${applicationData.authorship}" target="_blank"></a>
+		</div>
+	</div>
+
+	<div th:replace="~{layout/layout :: messages-zone}"></div>
+
+	<div class="container-fluid h-custom">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-md-5 col-sm-6 main-logo">
+				<img th:src="@{/images/app_main_logo.png}" class="img-fluid" th:alt="${applicationData.name}">
+			</div>
+
+			<div class="col-md-4 col-sm-5">
+				<!-- Pestañas de login y registro -->
+				<ul class="nav nav-tabs" id="authTabs" role="tablist">
+					<li class="nav-item" role="presentation">
+						<a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+					</li>
+					<li class="nav-item" role="presentation">
+						<a class="nav-link" id="registro-tab" data-bs-toggle="tab" href="#registro" role="tab" aria-controls="registro" aria-selected="false">Registro</a>
+					</li>
+				</ul>
+
+				<!-- Contenido de las pestañas -->
+				<div class="tab-content" id="authTabsContent">
+					<!-- Pestaña de Login -->
+					<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+						<form method="post" th:action="@{/login}">
+
+							<div class="divider d-flex align-items-center my-4">
+								<p class="text-center fw-bold mx-3 mb-0">Alquiler de Coches</p>
+							</div>
+
+							<div class="form-outline mb-4">
+								<input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="Username" required />
+							</div>
+
+							<div class="form-outline mb-3">
+								<input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password" required />
+							</div>
+
+							<div class="text-center text-lg-start mt-4 pt-2 mb-5">
+								<button type="submit" class="btn btn-lg standard-button" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+							</div>
+						</form>
+
+						<!-- Enlace a la pestaña de registro -->
+						<div class="text-center">
+							<p class="mt-2">¿No tienes una cuenta? <a href="#registro" class="link-primary" data-bs-toggle="tab">Regístrate aquí</a></p>
+						</div>
+					</div>
+
+					<!-- Pestaña de Registro -->
+					<div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+						<form method="post" th:action="@{/registro}">
+
+							<div class="divider d-flex align-items-center my-4">
+								<p class="text-center fw-bold mx-3 mb-0">Alquiler de Coches - Registro</p>
+							</div>
+
+							<div class="form-outline mb-4">
+								<input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="Username" required />
+							</div>
+
+							<div class="form-outline mb-4">
+								<input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password" required />
+							</div>
+
+							<div class="form-outline mb-4">
+								<input type="text" id="roles" name="roles" class="form-control form-control-lg" placeholder="Roles (Ej. USER)" value="USER" />
+							</div>
+
+							<div class="text-center text-lg-start mt-4 pt-2 mb-5">
+								<button type="submit" class="btn btn-lg standard-button" style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrarse</button>
+							</div>
+						</form>
+
+						<!-- Enlace a la pestaña de login -->
+						<div class="text-center">
+							<p class="mt-2">¿Ya tienes cuenta? <a href="#login" class="link-primary" data-bs-toggle="tab">Inicia sesión aquí</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+<div th:insert="~{layout/layout :: jquery-js}"></div>
+<div th:insert="~{layout/layout :: bootstrap-js}"></div>
+
+<!-- Agregar los scripts de Bootstrap para que las pestañas funcionen -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
