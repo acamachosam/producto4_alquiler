@@ -27,19 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return User.builder()
                 .username(usuario.getUsername())
-                .password(usuario.getPassword())
+                .password(passwordEncoder.encode(usuario.getPassword()))
+                .roles(usuario.getRoles())
                 .build();
-    }
-
-
-
-    // Método para registrar nuevos usuarios
-    public void registrarUsuario(String username, String password, String roles) {
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setUsername(username);
-        nuevoUsuario.setPassword(passwordEncoder.encode(password)); // Cifrar la contraseña
-        nuevoUsuario.setRoles(roles); // Asignar roles como texto plano o separado por comas
-
-        usuarioRepository.save(nuevoUsuario);
     }
 }
